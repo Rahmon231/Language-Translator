@@ -30,11 +30,13 @@ public class MainActivity extends AppCompatActivity {
     //Source Array of strings, Spinner data
 
     String[] fromLanguages = {
-            "From","English","Afrikaans","Arabic","Belarusian","Bengali","Catalan","Hindi","Urdu"
+            "From","English","Afrikaans","Arabic","Belarusian","Bengali","Catalan","Hindi","Urdu",
+            "French"
     };
 
     String[] toLanguages = {
-            "To","English","Afrikaans","Arabic","Belarusian","Bengali","Catalan","Hindi","Urdu"
+            "To","English","Afrikaans","Arabic","Belarusian","Bengali","Catalan","Hindi","Urdu",
+            "French"
     };
 
     private static final int REQUEST_CODE = 1;
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void translateLanguage(String fromLanguageCode, String toLanguageCode, String sourceText) {
-        translatedTV.setText("Downloading Language Model");
+        translatedTV.setText("Downloading Language Model...");
         try {
             TranslatorOptions options = new TranslatorOptions.Builder()
                     .setSourceLanguage(fromLanguageCode)
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             DownloadConditions conditions = new DownloadConditions.Builder().build();
 
             translator.downloadModelIfNeeded(conditions).addOnSuccessListener(unused -> {
-                translatedTV.setText("Translating.....");
+                translatedTV.setText("Translating...");
 
                 translator.translate(sourceText)
                         .addOnSuccessListener(s -> translatedTV.setText(s))
@@ -156,6 +158,10 @@ public class MainActivity extends AppCompatActivity {
 
             case "Urdu":
                 languageCode = TranslateLanguage.URDU;
+                break;
+
+            case "French":
+                languageCode = TranslateLanguage.FRENCH;
                 break;
         }
         return languageCode;
